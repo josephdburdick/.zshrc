@@ -1,0 +1,1 @@
+Repo for my favorite Zshell settings.
