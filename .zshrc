@@ -12,10 +12,10 @@ ZSH_THEME="robbyrussell"
 alias subl='open -a "Sublime Text"'
 alias zshconfig="subl ~/.zshrc"
 alias ohmyzsh="subl ~/.oh-my-zsh"
-alias mm='middleman server'
+
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gits="git status"
-alias rw="roots watch"
+
 alias mpull="git pull origin master"
 alias mpullr="git pull --rebase origin master"
 
