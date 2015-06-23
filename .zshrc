@@ -13,8 +13,14 @@ alias subl='open -a "Sublime Text"'
 alias zshconfig="subl ~/.zshrc"
 alias ohmyzsh="subl ~/.oh-my-zsh"
 
+alias rmDS="find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch"
+alias chromed="open /Applications/Google\ Chrome.app --args --disable-web-security"
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias myglog="glog --author=Joe"
+alias gw="gulp watch"
+alias gstatus="git status"
 alias gits="git status"
+alias gstash="git stash"
 
 alias mpull="git pull origin master"
 alias mpullr="git pull --rebase origin master"
