@@ -25,9 +25,13 @@ alias zshsource="source ~/.zshrc"
 alias zshupgrade="upgrade_oh_my_zsh"
 
 # Git
+alias undo-merge="git reset --merge ORIG_HEAD"
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias myglog="glog --author=Joe"
 gitbranchD(){ git branch -D $1; git push origin --delete $1 }
+gitBranchDelete(){ git branch -D $1; git push origin --delete $1 }
+gitDeleteBranch(){ git branch -D $1; git push origin --delete $1 }
+gignore() { gi bower,code,netbeans,node,osx,rails,rubymine,sass,sublimetext,svn,textmate,unity,vagrant,vim,virtualenv,visualstudio,visualstudiocode,webstorm,windows,wordpress,xamarinstudio,yeoman >> .gitignore }
 alias rmDS="find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch"
 alias gits="git status"
 alias gstash="git stash"
@@ -54,7 +58,6 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 export NVM_DIR="/Users/jb/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 export NODE_PATH=/Users/jb/.nvm/versions/v0.12.7/lib/node_modules:/Users/jb/npm/lib/node_modules:/Users/jb/npm/lib/node_modules
