@@ -1,10 +1,12 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jb/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -49,14 +51,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git meteor )
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -72,7 +73,10 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+
+# Aliases
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -83,43 +87,77 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias craftman="/Users/jb/.craftman/bin/craftman"
+
+# Docker
+# ------------------------------------
+# Docker alias and function
+# ------------------------------------
+
+# Get latest container ID
+alias dl="docker ps -l -q"
+
+# Get container process
+alias dps="docker ps"
+
+# Get process included stop container
+alias dpa="docker ps -a"
+
+# Get images
+alias di="docker images"
+
+# Get container IP
+alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+
+# Run deamonized container, e.g., $dkd base /bin/echo hello
+alias dkd="docker run -d -P"
+
+# Run interactive container, e.g., $dki base /bin/bash
+alias dki="docker run -i -t -P"
+
+# Execute interactive container, e.g., $dex base /bin/bash
+alias dex="docker exec -i -t"
+
+# Stop all containers
+dstop() { docker stop $(docker ps -a -q); }
+
+# Remove all containers
+drm() { docker rm $(docker ps -a -q); }
+
+# Stop and Remove all containers
+alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+
+# Remove all images
+dri() { docker rmi $(docker images -q); }
+
+# Dockerfile build, e.g., $dbu tcnksm/test
+dbu() { docker build -t=$1 .; }
+
+# Show all alias related docker
+dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+
+# Bash into running container
+dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
+
+# Initialize the Pure prompt system
+autoload -U promptinit; promptinit
+prompt pure
+
+# Initialize Node, NPM in PATH
+export PATH="$HOME/.node/bin:/usr/local/sbin:$PATH:/usr/local/share/npm/bin"
+
+# Initialize NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Initialize ZSH Syntax Highlight plugin
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
+
+
 # ZSH
-alias zshconfig="atom ~/.zshrc"
+alias zshconfig="nano ~/.zshrc"
 alias zshsource="source ~/.zshrc"
 alias zshupgrade="upgrade_oh_my_zsh"
-
-# Git
-alias undo-merge="git reset --merge ORIG_HEAD"
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-alias myglog="glog --author=Joe"
-gitbranchD(){ git branch -D $1; git push origin --delete $1 }
-gitBranchDelete(){ git branch -D $1; git push origin --delete $1 }
-gitDeleteBranch(){ git branch -D $1; git push origin --delete $1 }
-alias rmDS="find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch"
-alias gits="git status"
-alias gstash="git stash"
-alias mpull="git pull origin master"
-alias mpullr="git pull --rebase origin master"
-function bfg() { java -jar /Users/jb/Applications/Terminal/bfg-1.12.8.jar $@;}
-
-# Desktop Applications
-alias subl='open -a "Sublime Text"'
-alias chromed="open /Applications/Google\ Chrome.app --args --disable-web-security"
-alias inbox="open /Applications/Inbox.app"
-alias mixcloud="open /Applications/Mixcloud.app"
-alias localhost3000="open /Applications/localhost3000.app"
-alias pythonserver="python -m SimpleHTTPServer 8000"
-
-#Exports
-export ANDROID_HOME=/usr/local/opt/android-sdk
-export NVM_DIR="/Users/jb/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-PHP_VERSION=`ls /Applications/MAMP/bin/php/ | sort -n | tail -1`
-export MAMP_PHP=/Applications/MAMP/bin/php/php5.6.10/bin
-export NODE_PATH=/Users/jb/.nvm/versions/v0.12.7/lib/node_modules:/Users/jb/npm/lib/node_modules:/Users/jb/npm/lib/node_modules
-export PATH="$HOME/.node/bin:$MAMP_PHP:$PATH:/Applications/MAMP/Library/bin:/usr/local/mysql/bin:$HOME/.rvm/bin:/usr/local/share/npm/bin:/usr/local/bin/elixir:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
-export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
-function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
 ansiweather -l nyc -F -u imperial
